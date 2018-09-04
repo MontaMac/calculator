@@ -1,59 +1,117 @@
 package calculator;
 
+
+
+import java.util.ArrayList;
+
+import java.util.Arrays;
+
+import java.util.List;
+
+
+
 /**
+
  * @author Dimitrijs Fedotovs <a href="http://www.bug.guru">www.bug.guru</a>
+
  * @version 1.0
+
  * @since 1.0
+
  */
+
 class Calculator {
 
-    String calculate(String[] expression) {
-        System.out.println(expression[0]);
-        System.out.println(expression[1]);
-        System.out.println(expression[2]);
-        double a = Double.parseDouble(expression[0]);
-        double b = Double.parseDouble(expression[2]);
 
-        double result;
-        switch (expression[1]) {
-            case "+":
-                result = a + b;
-                break;
-            case "-":
-                result = a - b;
-                break;
-            case "*":
-                result = a * b;
-                break;
-            case "/":
-                result = a / b;
-                break;
-            default:
-                return "ERROR";
-        }
-        if (expression.length < 4) {
-            return String.valueOf(result);
-        } else {
-            double c = Double.parseDouble(expression[4]);
-            switch (expression[3]) {
+
+    String calculate(String[] expression) {
+
+        List<String> tmp = new ArrayList<>();
+
+        double a = Double.parseDouble(expression[0]);
+
+        for (int i = 1; i < expression.length; i+=2) {
+
+            String op = expression[i];
+
+            double b = Double.parseDouble(expression[i + 1]);
+
+            switch (op) {
+
                 case "+":
-                    result = result + c;
-                    break;
+
                 case "-":
-                    result = result - c;
+
+                    tmp.add(String.valueOf(a));
+
+                    tmp.add(op);
+
+                    a = b;
+
                     break;
+
                 case "*":
-                    result = result * c;
+
+                    a *= b;
+
                     break;
+
                 case "/":
-                    result = result / c;
+
+                    a /= b;
+
                     break;
-                default:
-                    return "ERROR";
+
             }
+
         }
+
+
+
+        tmp.add(String.valueOf(a));
+
+
+
+        System.out.println(tmp);
+
+
+
+        double result = Double.parseDouble(tmp.get(0));
+
+        for (int i = 1; i < tmp.size(); i += 2) {
+
+            String op = tmp.get(i);
+
+            double b = Double.parseDouble(tmp.get(i + 1));
+
+            switch (op) {
+
+                case "+":
+
+                    result += b;
+
+                    break;
+
+                case "-":
+
+                    result -= b;
+
+                    break;
+
+                default:
+
+                    return "ERROR";
+
+            }
+
+        }
+
+
 
         return String.valueOf(result);
+
     }
+
+
 
 }
